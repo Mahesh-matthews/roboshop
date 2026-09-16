@@ -5,19 +5,19 @@ AMI_ID="ami-0220d79f3f480ecf5"
 for instance in $@
 do 
 
-    $aws ec2 run-instances \
+    INSTANCE_ID=$( $aws ec2 run-instances \
     --image-id @AMI_ID \
     --instance-type t3.micro \
     --security-group-ids $SG_ID \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
-    --query 'Instances[0].InstanceId' \
-    --output text
+    --query 'Instances[0].INSTANCE_ID' \
+    --output text )
 
-    if [ $instance == "frontend" ]; then
+    if [ $instance=="frontend" ]; then
 
         ip=$(
             aws ec2 describe-instances \
-            --instance-ids $InstanceId \
+            --instance-ids $INSTANCE_ID \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text
 
@@ -25,7 +25,7 @@ do
         else 
         ip=$(
             aws ec2 describe-instances \
-            --instance-ids $InstanceId \
+            --instance-ids $INSTANCE_ID \
             --query 'Reservations[*].Instances[*].PrivateIpIpAddress' \
             --output text
         )    
