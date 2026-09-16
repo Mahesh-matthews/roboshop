@@ -7,29 +7,29 @@ do
 
     INSTANCE_ID=$( aws ec2 run-instances \
     --image-id $AMI_ID \
-    --instance-type t3.micro \
+    --instance-type "t3.micro" \
     --security-group-ids $SG_ID \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
-    --query 'Instances[0].INSTANCE_ID' \
+    --query 'Instances[0].InstanceId' \
     --output text )
 
-    if [ $instance=="frontend" ]; then
+    if [ $instance == "frontend" ]; then
 
-        ip=$(
+        IP=$(
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            --query 'Reservations[].Instances[].PublicIpAddress' \
             --output text
 
         )
         else 
-        ip=$(
+        IP=$(
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
-            --query 'Reservations[*].Instances[*].PrivateIpAddress' \
+            --query 'Reservations[].Instances[].PrivateIpAddress' \
             --output text
         )    
     fi    
 
-    echo "IPAddress: $ip"
+    echo "IP Address: $IP"
 done
