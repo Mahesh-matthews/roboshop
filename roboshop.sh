@@ -26,7 +26,7 @@ do
         ip=$(
             aws ec2 describe-instances \
             --instance-ids $INSTANCE_ID \
-            --query 'Reservations[*].Instances[*].PrivateIpIpAddress' \
+            --query 'Reservations[*].Instances[*].PrivateIpAddress' \
             --output text
         )    
     fi    
