@@ -30,7 +30,7 @@ if [ $USERID -ne 0 ]; then
 
    }
 
-cp mongodb.repo /etc/yum.repos.d/mongodb.repo &>>$LOGS_FILE
+cp mongo.repo /etc/yum.repos.d/mongodb.repo &>>$LOGS_FILE
 validate $? "Copying MongoDB repo"
 
 dnf install mongodb-org -y &>>$LOGS_FILE
