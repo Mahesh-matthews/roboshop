@@ -30,4 +30,6 @@ do
             --output text
         )    
     fi    
+
+    echo "IPAddress: $ip"
 done
