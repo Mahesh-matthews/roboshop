@@ -33,19 +33,19 @@ if [ $USERID -ne 0 ]; then
 cp mongo.repo /etc/yum.repos.d/mongodb.repo &>>$LOGS_FILE
 validate $? "Copying MongoDB repo"
 
-dnf install mongodb-org -y &>>$LOGS_FILE
+dnf install mongodb-org -y >>"$LOGS_FILE" 2>&1
 validate $? "Installing MongoDB Server"
 
-systemctl enable mongod &>>$LOGS_FILE
+systemctl enable mongod >>"$LOGS_FILE" 2>&1
 validate $? "Enabling MongoDB Service"
 
-systemctl start mongod &>>$LOGS_FILE
+systemctl start mongod >>"$LOGS_FILE" 2>&1
 validate $? "Starting MongoDB Service"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOGS_FILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf >>"$LOGS_FILE" 2>&1
 validate $? "Allowing remote connections to MongoDB"
 
-systemctl restart mongod &>>$LOGS_FILE
+systemctl restart mongod >>"$LOGS_FILE" 2>&1
 validate $? "Restarting MongoDB Service"
 
 
